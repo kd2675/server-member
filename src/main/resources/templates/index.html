@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}"
+      layout:fragment="content"
+>
+<head>
+    <title>테스트 페이지 </title>
+
+    <!-- inline CSS 영역-->
+    <link th:inline="css" rel="stylesheet" th:href="@{/css/index/index.css}"/>
+
+    <!-- inline JS 영역-->
+    <script th:inline="javascript" type="text/javascript" th:src="@{/js/index/index.js}"></script>
+</head>
+
+<body>
+<div hidden id="redirectUrl" th:data-redirect-url="${redirectUrl}"></div>
+<div class="signin-form">
+    <form>
+        <h2>Sign in</h2>
+        <p class="hint-text">Sign in with your social media account</p>
+        <div class="social-btn text-center">
+            <a href="#" class="btn btn-primary btn-lg" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="btn btn-info btn-lg" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="btn btn-danger btn-lg" title="Google"><i class="fa-brands fa-google"></i></a>
+        </div>
+        <div class="or-seperator"><b>or</b></div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <span class="fa fa-user"></span>
+                    </span>
+                </div>
+                <input type="text" autocomplete="email" class="form-control" id="userEmail" name="userEmail"
+                       placeholder="Email" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <i class="fa fa-lock"></i>
+                    </span>
+                </div>
+                <input type="password" autocomplete="password" class="form-control" id="userPassword"
+                       name="userPassword" placeholder="Password" required="required">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-success btn-lg btn-block" id="signInBtn">Sign in</button>
+        </div>
+    </form>
+    <div class="text-center small"><a href="#">Forgot Your password?</a></div>
+    <div class="text-center small">Don't have an account? <a href="#">Sign up</a></div>
+</div>
+</body>
+</html>
