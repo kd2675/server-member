@@ -3,6 +3,7 @@ package com.example.member.service.auth.api.act;
 import com.example.member.common.config.jwt.provider.JwtTokenProvider;
 import com.example.member.service.auth.api.biz.LogoutService;
 import com.example.member.service.auth.api.dto.TokenDTO;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.core.response.base.dto.ResponseDTO;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = {"/api/auth"})
+@RequestMapping(value = {"/member"})
 public class LogoutController {
     private final LogoutService logoutService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -23,10 +24,14 @@ public class LogoutController {
             @RequestHeader("Authorization") String accessToken,
             @CookieValue("RefreshToken") String refreshToken
     ) {
-        CookieUtils.deleteCookie("RefreshToken");
-        String userEmail = jwtTokenProvider.getUserEmail(jwtTokenProvider.resolveToken(accessToken));
-        logoutService.logout(userEmail, TokenDTO.of(accessToken, refreshToken));
+        if (!StringUtils.isEmpty(accessToken) && !StringUtils.isEmpty(refreshToken)) {
+            CookieUtils.deleteCookie("RefreshToken");
+            String userEmail = jwtTokenProvider.getUserEmail(jwtTokenProvider.resolveToken(accessToken));
+            logoutService.logout(userEmail, TokenDTO.of(accessToken, refreshToken));
 
-        return ResponseDTO.of(true, Code.OK);
+            return ResponseDTO.of(true, Code.OK);
+        } else {
+            return ResponseDTO.of(true, Code.BAD_REQUEST);
+        }
     }
 }

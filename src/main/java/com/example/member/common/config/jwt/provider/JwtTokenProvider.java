@@ -146,6 +146,7 @@ public class JwtTokenProvider {
 
         return true;
     }
+
     public Boolean checkUsedAuthorizationCode(String authorizationCode) {
         return usedAuthorizationCodeRedisREP.existsById(authorizationCode);
     }

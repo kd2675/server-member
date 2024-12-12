@@ -44,7 +44,7 @@ public class SecurityConfig {
 //    private final JwtTokenProvider jwtTokenProvider;
 
     public static final String[] PERMIT_ALL_URL = {
-            "/api/auth/ctf/**",
+            "/member/ctf/**",
             "/error"
     };
 
@@ -106,8 +106,8 @@ public class SecurityConfig {
 //                                        AntPathRequestMatcher.antMatcher("/auth/**")
 //                                ).authenticated()
 //                )
-//                .mvcMatchers("/api/auth/login", "/api/auth/refresh").permitAll()
-//                .antMatchers("/api/auth/join/**", "/exception/**").permitAll()
+//                .mvcMatchers("/login", "/refresh").permitAll()
+//                .antMatchers("/join/**", "/exception/**").permitAll()
 //                .antMatchers("/api/**/**/ctf/**").permitAll()
 //                .requestMatchers("/api/ctf/**").authenticated()
 //                .requestMatchers("/api/**/ctf/**").authenticated()

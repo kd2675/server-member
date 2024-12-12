@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth/ctf/exception")
+@RequestMapping("/ctf/exception")
 public class TokenExceptionController {
     @GetMapping("/entrypoint")
     public void entryPoint() {

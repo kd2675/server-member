@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth/ctf/join")
+@RequestMapping("/member/ctf/join")
 public class JoinController {
     private final JoinService joinService;
 

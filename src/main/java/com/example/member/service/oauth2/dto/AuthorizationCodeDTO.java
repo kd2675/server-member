@@ -1,6 +1,6 @@
 package com.example.member.service.oauth2.dto;
 
-import com.example.auth.config.jwt.enums.JwtHeaderUtilEnums;
+import com.example.member.common.config.jwt.enums.JwtHeaderUtilEnums;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

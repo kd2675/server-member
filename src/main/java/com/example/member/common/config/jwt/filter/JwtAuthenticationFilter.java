@@ -28,18 +28,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (Arrays.stream(SecurityConfig.PERMIT_ALL_URL).map(
-                v -> v.replaceAll("/[*][*]", "")
-        ).anyMatch(
-                v -> request.getServletPath().contains(v)
-        )) {
+        if (Arrays.stream(SecurityConfig.PERMIT_ALL_URL)
+                .map(v -> v.replaceAll("/[*][*]", ""))
+                .anyMatch(v -> request.getServletPath().contains(v))
+        ) {
             filterChain.doFilter(request, response);
             return;
         }
-//        if (request.getServletPath().contains(SecurityConfig.PERMIT_ALL_URL)) {
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
 
         String accessToken = jwtTokenProvider.getHeaderToken(request);
         if (accessToken != null && jwtTokenProvider.validateToken(accessToken)) {

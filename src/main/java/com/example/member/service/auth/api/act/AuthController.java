@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = {"/api/auth"})
+@RequestMapping(value = {"/member"})
 public class AuthController {
 
     private final AuthService authService;
@@ -29,6 +29,12 @@ public class AuthController {
 
     @GetMapping("/check")
     public ResponseDTO getCheck() {
+        return ResponseDTO.of(true, Code.OK);
+    }
+
+    @GetMapping("/user/check")
+    public ResponseDTO getUserCheck(UserEntity userEntity) {
+        UserDTO userDTO = UserDTO.of(userEntity);
         return ResponseDTO.of(true, Code.OK);
     }
 

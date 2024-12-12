@@ -21,16 +21,13 @@ public class JwtEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        Code code = Code.UNAUTHORIZED;
-
         log.error("JwtEntryPoint unauthorized error: {}", authException.getMessage());
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);
 
         response.setCharacterEncoding("utf-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(code.getHttpStatus().value());
-        String s = mapper.writeValueAsString(ResponseDTO.of(false, code));
-        response.getWriter().write(s);
+        response.setStatus(Code.OK.getHttpStatus().value());
+        response.getWriter().write(mapper.writeValueAsString(ResponseDTO.of(false, Code.UNAUTHORIZED)));
     }
 }

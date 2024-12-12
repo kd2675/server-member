@@ -21,15 +21,13 @@ public class JwtDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        Code code = Code.UNAUTHORIZED;
-
         log.error("JwtDeniedHandler unauthorized error: {}", accessDeniedException.getMessage());
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true);
 
         response.setCharacterEncoding("utf-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(code.getHttpStatus().value());
-        response.getWriter().write(mapper.writeValueAsString(ResponseDTO.of(false, code)));
+        response.setStatus(Code.OK.getHttpStatus().value());
+        response.getWriter().write(mapper.writeValueAsString(ResponseDTO.of(false, Code.UNAUTHORIZED)));
     }
 }
