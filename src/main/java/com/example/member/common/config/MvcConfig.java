@@ -46,10 +46,12 @@ public class MvcConfig implements WebMvcConfigurer {
         String[] origins = null;
         if (ServerTypeUtils.isLocal()) {
             origins = new String[]{
-                    "http://localhost:20090/"
+                    "http://localhost:20090",
             };
         } else {
-            origins = new String[]{"http://localhost",};
+            origins = new String[]{
+                    "http://localhost",
+            };
         }
         registry.addMapping("/**")
                 .allowedOriginPatterns(
