@@ -25,6 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.stream.Stream;
 
 
 @Configuration
@@ -48,12 +51,14 @@ public class SecurityConfig {
             "/error"
     };
 
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring()
-//                .requestMatchers("/api/health")
-//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+                .requestMatchers("/api/health")
+                .requestMatchers(
+                        PathRequest.toStaticResources().atCommonLocations()
+                );
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,6 +77,15 @@ public class SecurityConfig {
                         .requestMatchers(PERMIT_ALL_URL).permitAll()
                         .anyRequest().authenticated()
                 )
+//                .authorizeHttpRequests(authorizeRequest ->
+//                        authorizeRequest
+//                                .requestMatchers(
+//                                        Stream.of(PERMIT_ALL_URL)
+//                                                .map(AntPathRequestMatcher::new)
+//                                                .toArray(AntPathRequestMatcher[]::new)
+//                                ).permitAll()
+//                                .anyRequest().authenticated()
+//                )
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
