@@ -24,7 +24,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         log.error("    URL   => " + request.getContextPath() + " | HttpMessageNotReadableException Error | NONE 처리 됐음");
-        return handleExceptionInternal(ex, Code.INTERNAL_ERROR, request);
+        return handleExceptionInternal(ex, Code.INTERNAL_SERVER_ERROR, request);
     }
 
     @ExceptionHandler
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
         log.error("----------Exception----------=> {}", e);
-        return handleExceptionInternal(e, Code.INTERNAL_ERROR, request);
+        return handleExceptionInternal(e, Code.INTERNAL_SERVER_ERROR, request);
     }
 
     private ResponseEntity<Object> handleExceptionInternal(Exception e, Code errorCode,

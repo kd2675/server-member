@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,13 +20,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.stream.Stream;
 
 
 @Configuration
@@ -36,15 +31,11 @@ import java.util.stream.Stream;
 @EnableMethodSecurity
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
-    //    private final CustomUserDetailService customUserDetailService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
     private final JwtEntryPoint jwtEntryPoint;
     private final JwtDeniedHandler jwtDeniedHandler;
     private final PasswordEncoder passwordEncoder;
-
-//    private final AuthenticationProvider authenticationProvider;
-//    private final JwtTokenProvider jwtTokenProvider;
 
     public static final String[] PERMIT_ALL_URL = {
             "/member/ctf/**",
@@ -77,22 +68,11 @@ public class SecurityConfig {
                         .requestMatchers(PERMIT_ALL_URL).permitAll()
                         .anyRequest().authenticated()
                 )
-//                .authorizeHttpRequests(authorizeRequest ->
-//                        authorizeRequest
-//                                .requestMatchers(
-//                                        Stream.of(PERMIT_ALL_URL)
-//                                                .map(AntPathRequestMatcher::new)
-//                                                .toArray(AntPathRequestMatcher[]::new)
-//                                ).permitAll()
-//                                .anyRequest().authenticated()
-//                )
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
-//                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
 
                 .authenticationProvider(authenticationProvider())
 
@@ -101,45 +81,8 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtDeniedHandler)
                 );
 
-
-//                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-//                    @Override
-//                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-//                        CorsConfiguration config = new CorsConfiguration();
-//                        config.setAllowedOrigins(Collections.singletonList("http://hello.world.com"));
-//                        config.setAllowedMethods(Collections.singletonList("*"));
-//                        config.setAllowCredentials(true);
-//                        config.setAllowedHeaders(Collections.singletonList("*"));
-//                        config.setMaxAge(3600L); //1시간
-//                        return config;
-//                    }
-//                }))
-//                .authorizeHttpRequests(authorizeRequest ->
-//                        authorizeRequest
-//                                .requestMatchers(
-//                                        AntPathRequestMatcher.antMatcher("/auth/**")
-//                                ).authenticated()
-//                )
-//                .mvcMatchers("/login", "/refresh").permitAll()
-//                .antMatchers("/join/**", "/exception/**").permitAll()
-//                .antMatchers("/api/**/**/ctf/**").permitAll()
-//                .requestMatchers("/api/ctf/**").authenticated()
-//                .requestMatchers("/api/**/ctf/**").authenticated()
-//                .requestMatchers("/api/**/**/ctf/**").authenticated()
-
-//        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-
         return http.build();
     }
-
-    //    @Bean
-//    public DaoAuthenticationProvider authProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
-//
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -150,28 +93,9 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authenticationProvider());
         return authenticationManagerBuilder.build();
     }
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        AuthenticationManager authenticationManager = config.getAuthenticationManager();
-//        return authenticationManager;
-//    }
-
-    //    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.addAllowedOrigin("*");
-//        corsConfiguration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));
-//        corsConfiguration.addAllowedHeader("*");
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.setMaxAge(3600L);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        return source;
-//    }
 }
