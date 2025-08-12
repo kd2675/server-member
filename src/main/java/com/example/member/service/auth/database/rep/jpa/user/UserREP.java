@@ -1,6 +1,6 @@
 package com.example.member.service.auth.database.rep.jpa.user;
 
-import org.example.database.auth.database.rep.jpa.user.UserEntity;
+import org.example.database.database.auth.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

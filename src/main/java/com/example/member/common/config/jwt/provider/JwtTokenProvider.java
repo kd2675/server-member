@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.core.response.base.exception.GeneralException;
 import org.example.core.response.base.vo.Code;
 import org.example.core.utils.CookieUtils;
-import org.example.database.auth.database.rep.redis.refresh.RefreshTokenRedis;
+import org.example.database.database.auth.redis.RefreshTokenRedis;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

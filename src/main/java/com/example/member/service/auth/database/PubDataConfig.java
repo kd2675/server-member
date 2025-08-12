@@ -1,7 +1,7 @@
 package com.example.member.service.auth.database;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.example.database.common.RoutingDataSource;
+import org.example.database.common.datasource.RoutingDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = {"org.example.database.auth.database.rep.jpa", "com.example.member.service.auth.database.rep.jpa"},
+        basePackages = {"org.example.database.database.auth.rep.jpa", "com.example.member.service.auth.database.rep.jpa"},
         entityManagerFactoryRef = "pubEntityManagerFactory",
         transactionManagerRef = "pubTransactionManager"
 )
@@ -89,8 +89,8 @@ public class PubDataConfig {
         properties.put("hibernate.use_sql_comments", true);
 
         return builder.dataSource(new LazyConnectionDataSourceProxy(routingDataSource))
-                .packages("org.example.database.auth.database.rep.jpa")
-//                .packages("org.example.database.auth.database.rep.jpa")
+                .packages("org.example.database.database.auth.rep.jpa")
+//                .packages("org.example.database.database.auth.rep.jpa")
                 .properties(properties)
                 .persistenceUnit("pubEntityManager")
                 .build();

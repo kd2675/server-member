@@ -1,6 +1,5 @@
 package com.example.member.service.oauth2.biz;
 
-import com.example.member.common.config.jwt.enums.JwtHeaderUtilEnums;
 import com.example.member.common.config.jwt.provider.JwtTokenProvider;
 import com.example.member.service.auth.api.dto.LoginParamDTO;
 import com.example.member.service.auth.api.dto.TokenDTO;
@@ -12,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.core.response.base.exception.GeneralException;
 import org.example.core.response.base.vo.Code;
-import org.example.core.utils.CookieUtils;
-import org.example.database.auth.database.rep.jpa.user.UserEntity;
-import org.example.database.auth.database.rep.redis.refresh.RefreshTokenRedis;
+import org.example.database.database.auth.entity.UserEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

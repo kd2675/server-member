@@ -7,7 +7,7 @@ import com.example.member.service.auth.database.rep.redis.logout.LogoutAccessTok
 import com.example.member.service.auth.database.rep.redis.refresh.RefreshTokenRedisREP;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.database.auth.database.rep.redis.logout.LogoutAccessTokenRedis;
+import org.example.database.database.auth.redis.LogoutAccessTokenRedis;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -11,7 +11,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableRedisRepositories(basePackages = {"org.example.database.auth.database.rep.redis", "com.example.member.service.auth.database.rep.redis"})
+@EnableRedisRepositories(basePackages = {"org.example.database.database.auth.rep.redis", "com.example.member.service.auth.database.rep.redis"})
 public class RedisConfig {
     @Value("${spring.data.redis.host}")
     private String host;

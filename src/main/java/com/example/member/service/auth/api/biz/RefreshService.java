@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.core.response.base.exception.GeneralException;
 import org.example.core.response.base.vo.Code;
 import org.example.core.utils.CookieUtils;
-import org.example.database.auth.database.rep.redis.refresh.RefreshTokenRedis;
+import org.example.database.database.auth.redis.RefreshTokenRedis;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

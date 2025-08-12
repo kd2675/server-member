@@ -6,7 +6,7 @@
 //import lombok.RequiredArgsConstructor;
 //import org.example.core.response.base.exception.GeneralException;
 //import org.example.core.response.base.vo.Code;
-//import org.example.database.auth.database.rep.jpa.user.UserEntity;
+//import org.example.database.database.auth.entity.UserEntity;
 //import org.springframework.cache.annotation.Cacheable;
 //import org.springframework.context.annotation.Primary;
 //import org.springframework.security.core.userdetails.UserDetails;

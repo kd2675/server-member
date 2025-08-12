@@ -1,6 +1,6 @@
 package com.example.member.service.auth.database.rep.redis.logout;
 
-import org.example.database.auth.database.rep.redis.logout.LogoutAccessTokenRedis;
+import org.example.database.database.auth.redis.LogoutAccessTokenRedis;
 import org.springframework.data.keyvalue.repository.KeyValueRepository;
 import org.springframework.stereotype.Repository;
 
