@@ -1,7 +1,9 @@
 package com.example.member.common.config.jwt.provider;
 
+import com.example.member.common.config.jwt.biz.CustomUserDetailsService;
 import com.example.member.common.config.jwt.enums.JwtExpirationEnums;
 import com.example.member.common.config.jwt.enums.JwtHeaderUtilEnums;
+import com.example.member.common.config.jwt.vo.CustomUserDetailVO;
 import com.example.member.service.auth.database.rep.redis.authorization.UsedAuthorizationCodeRedisREP;
 import com.example.member.service.auth.database.rep.redis.logout.LogoutAccessTokenRedisREP;
 import com.example.member.service.auth.database.rep.redis.refresh.RefreshTokenRedisREP;
@@ -36,7 +38,7 @@ import java.util.function.Function;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     private final RefreshTokenRedisREP refreshTokenRedisREP;
@@ -48,10 +50,11 @@ public class JwtTokenProvider {
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     public String generateAccessToken(String userEmail) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+        CustomUserDetailVO userDetails = userDetailsService.loadUserByUsername(userEmail);
 
         String token =
                 doGenerateToken(
+                        userDetails.getId(),
                         userDetails.getUsername(),
                         JwtExpirationEnums.ACCESS_TOKEN_EXPIRATION_TIME.getValue()
                 );
@@ -60,10 +63,11 @@ public class JwtTokenProvider {
     }
 
     public String generateRefreshToken(String userEmail) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+        CustomUserDetailVO userDetails = userDetailsService.loadUserByUsername(userEmail);
 
         String token =
                 doGenerateToken(
+                        userDetails.getId(),
                         userDetails.getUsername(),
                         JwtExpirationEnums.REFRESH_TOKEN_EXPIRATION_TIME.getValue()
                 );
@@ -80,8 +84,9 @@ public class JwtTokenProvider {
 
         return token;
     }
-    private String doGenerateToken(String userEmail, long expireTime) { // 1
+    private String doGenerateToken(Long id, String userEmail, long expireTime) { // 1
         Claims claims = Jwts.claims();
+        claims.put("id", id);
         claims.put("userEmail", userEmail);
 
         return Jwts.builder()

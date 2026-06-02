@@ -19,14 +19,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class CustomUserDetailVO implements UserDetails {
-
+    private Long id;
     private String username;
     private String password;
+
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
-    public static UserDetails of(UserEntity userEntity) {
+    public static CustomUserDetailVO of(UserEntity userEntity) {
         return CustomUserDetailVO.builder()
+                .id(userEntity.getId())
                 .username(userEntity.getEmail())
                 .password(userEntity.getPassword())
                 .roles(userEntity.getRoles())

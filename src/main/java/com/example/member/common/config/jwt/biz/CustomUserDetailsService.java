@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Cacheable(value = CacheKey.USER, key = "#p0", unless = "#result == null")
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public CustomUserDetailVO loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userREP.findByEmailWithRole(email)
                 .orElseThrow(() -> new GeneralException(Code.NO_SEARCH_USER, "없는 회원입니다."));
         return CustomUserDetailVO.of(userEntity);
