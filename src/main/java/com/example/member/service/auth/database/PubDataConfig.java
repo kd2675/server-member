@@ -39,7 +39,7 @@ public class PubDataConfig {
     @Primary
     @ConfigurationProperties("database.datasource.pub.master.configure")
     public DataSource pubMasterDatasource() {
-        return pubSlave1DatasourceProperties()
+        return pubMasterDatasourceProperties()
                 .initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
@@ -89,8 +89,7 @@ public class PubDataConfig {
         properties.put("hibernate.use_sql_comments", true);
 
         return builder.dataSource(new LazyConnectionDataSourceProxy(routingDataSource))
-                .packages("org.example.database.database.auth.rep.jpa")
-//                .packages("org.example.database.database.auth.rep.jpa")
+                .packages("org.example.database.database.auth.entity")
                 .properties(properties)
                 .persistenceUnit("pubEntityManager")
                 .build();

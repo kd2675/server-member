@@ -31,6 +31,7 @@ import org.springframework.util.StringUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -56,6 +57,7 @@ public class JwtTokenProvider {
                 doGenerateToken(
                         userDetails.getId(),
                         userDetails.getUsername(),
+                        userDetails.getRoles(),
                         JwtExpirationEnums.ACCESS_TOKEN_EXPIRATION_TIME.getValue()
                 );
 
@@ -69,6 +71,7 @@ public class JwtTokenProvider {
                 doGenerateToken(
                         userDetails.getId(),
                         userDetails.getUsername(),
+                        userDetails.getRoles(),
                         JwtExpirationEnums.REFRESH_TOKEN_EXPIRATION_TIME.getValue()
                 );
 
@@ -84,10 +87,11 @@ public class JwtTokenProvider {
 
         return token;
     }
-    private String doGenerateToken(Long id, String userEmail, long expireTime) { // 1
+    private String doGenerateToken(Long id, String userEmail, List<String> roles, long expireTime) { // 1
         Claims claims = Jwts.claims();
         claims.put("id", id);
         claims.put("userEmail", userEmail);
+        claims.put("roles", roles);
 
         return Jwts.builder()
                 .setClaims(claims)
